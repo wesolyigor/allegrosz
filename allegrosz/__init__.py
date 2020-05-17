@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, g
 
 
 def create_app():
@@ -12,3 +12,10 @@ def create_app():
 
 
 app = create_app()
+
+
+@app.teardown_appcontext
+def close_connection(exception):
+    db = getattr(g, "__database", None)
+    if db is not None:
+        db.close()
