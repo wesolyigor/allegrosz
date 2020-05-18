@@ -1,1 +1,2 @@
 from allegrosz import app
+
