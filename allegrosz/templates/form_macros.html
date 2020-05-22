@@ -1,8 +1,8 @@
 {% macro render_field(field) %}
 
-    <div {% if field.errors %} class="error" {% endif %}>
-        {{  field.label }}
-        {{  field(**kwargs)  }}
+    <div class="form-group {% if field.errors %} error {% endif %}">
+        {{ field.label }}<br>
+        {{ field(**kwargs) }}<br>
     </div>
 
 <div class="error">
@@ -12,5 +12,4 @@
             {% endfor %}
         </ul>
 </div>
-
 {%  endmacro %}

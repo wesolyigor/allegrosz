@@ -1,4 +1,4 @@
-from flask import Blueprint, request, url_for, render_template
+from flask import Blueprint, request, url_for, render_template, flash
 from werkzeug.utils import redirect
 
 from allegrosz.db.db import get_db
@@ -13,6 +13,14 @@ def add_item():
     conn = get_db()
     c = conn.cursor()
 
+    c.execute("SELECT id, name FROM categories")
+    categories = c.fetchall()
+    form.category.choices = categories
+
+    c.execute("""SELECT id, name FROM subcategories WHERE category_id = ? """, (1,))
+    subcategories = c.fetchall()
+    form.subcategory.choices = subcategories
+
     if request.method == 'POST':
         c.execute('''INSERT
         INTO items(title, description, price, image, category_id, subcategory_id)
@@ -22,13 +30,14 @@ def add_item():
             form.description.data,
             float(form.price.data),
             "",
-            1,
-            1
+            form.category.data,
+            form.subcategory.data,
         ))
 
         conn.commit()
-
+        flash(f"Item {form.title.data} has been succesfully submitted.", "success")
         return redirect(url_for('main.index'))
+
     return render_template('add.html', form=form)
 
 

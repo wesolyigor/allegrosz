@@ -1,1 +1,10 @@
-ECHO is on.
+click==7.1.2
+Flask==1.1.2
+Flask-WTF==0.14.3
+items==0.6.5
+itsdangerous==1.1.0
+Jinja2==2.11.2
+MarkupSafe==1.1.1
+nulltype==2.3.1
+Werkzeug==1.0.1
+WTForms==2.3.1
