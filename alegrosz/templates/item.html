@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ item.title }}
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-lg-4 my-4">
+        <a href="{{ url_for('items.edit_item', item_id=item.id) }}" class="btn btn-primary">Edit
+        </a>
+        <form action="{{ url_for('items.remove_item', item_id=item.id) }}" class="delete-form" method="POST">
+            {{ removeItemForm.hidden_tag() }}
+            {{ removeItemForm.submit(class="btn btn-danger", onclick="return confirm('Are you sure you want to delete
+            this item?');") }}
+        </form>
+    </div>
+    <div class="col-lg-8">
+        <div class="card mt-4">
+            <div class="embed-responsive embed-responsive-16by9">
+                <img src="{% if item.image %}
+                                {{ url_for('main.uploads', filename=item.image) }}
+                            {% else %}
+                                {{ url_for('static', filename='images/placeholder.png') }}
+                            {% endif %}
+<!--                    " alt=""-->
+<!--                     class="card-img-top embed-responsive-item">-->
+            </div>
+        </div>
+        <div class="card-body">
+            <h3 class="card-title">
+                {{ item.title }}
+            </h3>
+            <h4>{{ "$%.2f"|format(item.price) }}
+            </h4>
+            <p class="card-text">
+                {{ item.description }}
+            </p>
+            <h4>
+                <div class="badge badge-secondary">
+                    {{ item.category }}
+                </div>
+                <div class="badge badge-secondary">
+                    {{ item.subcategory }}
+                </div>
+            </h4>
+        </div>
+        <div class="card card-outline-secondary my-4">
+            <div class="card-header">
+                Product Reviews
+            </div>
+            <div class="card-body">
+                <p>Some comment</p>
+                <small class="text-muted">Posted by Anonymous</small>
+                <hr>
+                <p>Some comment</p>
+                <small class="text-muted">Posted by Anonymous</small>
+                <hr>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
