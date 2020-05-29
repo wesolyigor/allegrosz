@@ -24,7 +24,3 @@ def add_comment():
         conn.commit()
         # return render_template('_comment.html', content=form.content.data)
     return redirect(url_for('items.item', item_id=form.item_id.data))
-
-
-
-

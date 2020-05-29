@@ -15,7 +15,7 @@ class NewItemForm(FlaskForm):
                                 validators=[InputRequired("Input is required"),
                                             DataRequired("Data is required"),
                                             Length(min=5, max=40, message="Input must be between 5 and 40 characters")])
-    price = PriceField("Price")
+    price = PriceField("Price", validators=[DataRequired('A price should be int')])
     image = FileField('Image', validators=[FileAllowed(["jpg", "jpeg", "png"], "Images only")])
 
 

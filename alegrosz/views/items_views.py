@@ -67,7 +67,7 @@ def add_item():
     subcategories = c.fetchall()
     form.subcategory.choices = subcategories
 
-    if request.method == 'POST':
+    if form.validate_on_submit():
         filename = ""
         if form.image.data:
             filename = save_image_upload(form.image.data)

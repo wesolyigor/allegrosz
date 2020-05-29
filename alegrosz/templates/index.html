@@ -53,8 +53,6 @@ Alegrosz Welcome
                             <a href="{{ url_for('items.item', item_id=item.id) }}">{{ item.title }}
                             </a>
                         </h4>
-                        <h5>{{ "$%.2f"|format(item.price) }}
-                        </h5>
                         <p class="card-text">
                             {{ item.description }}
                         </p>
