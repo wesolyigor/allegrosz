@@ -3,6 +3,7 @@ from werkzeug.utils import redirect, unescape
 
 from alegrosz.db import get_db
 from alegrosz.forms.cateogry_forms import CategoryForm
+from alegrosz.forms.comments_forms import NewCommentForm
 from alegrosz.forms.item_forms import NewItemForm, EditItemForm, RemoveItemForm
 from alegrosz.helpers.helpers_images import save_image_upload
 
@@ -34,7 +35,22 @@ def item(item_id):
         }
     except TypeError:
         item = {}
-    return render_template('item.html', item=item, removeItemForm=remove_item_form)
+
+    comments = []
+
+    if item:
+        comments_from_db = c.execute('''SELECT
+        content FROM comments
+        WHERE item_id = ? 
+        ORDER BY id DESC
+        ''', (item_id,))
+
+        comments = [{'content': row[0]} for row in comments_from_db]
+
+    commentForm = NewCommentForm()
+    commentForm.item_id.data = item_id
+    return render_template('item.html', item=item, removeItemForm=remove_item_form, commentForm=commentForm,
+                           comments=comments)
 
 
 @item_bp.route('/add', methods=['GET', 'POST'])
