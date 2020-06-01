@@ -50,17 +50,17 @@
             <div class="card-header">
                 Product Reviews
             </div>
-            <div class="card-body">
+            <div class="card-body unexpected-comment">
                 <form action="{{ url_for('comments.add_comment') }}" class="comment-form" method="post">
-                    {{ commentForm.hidden_tag() }}
+                    {{ commentForm.hidden_tag()}}
                     <div class="form-group">
                         {{ commentForm.content.label }}
-                        {{ commentForm.content(class='form-control', rows='3') }}
+                        {{ commentForm.content(class='form-control content-xd', rows='3') }}
                     </div>
-                        {{ commentForm.submit(class='btn btn-primary') }}
+                        {{ commentForm.submit(class='btn btn-primary unexpectedButton') }}
                         <span class="comment-error"></span>
                 </form>
-                <hr class="form-boarder">
+                <hr class="form-border">
                 {% if comments %}
                     {% for comment in comments %}
                         {% with content = comment.content %}
@@ -75,4 +75,9 @@
     </div>
 </div>
 
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="{{  url_for('static', filename='js/comment.js') }}"></script>
 {% endblock %}

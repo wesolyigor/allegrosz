@@ -16,6 +16,10 @@ Alegrosz Welcome
                     {{ form.title.label }}
                     {{ form.title(class="form-control") }}
                 </div>
+                <div class="form-check">
+                    {{ form.adv_filter(class="form-check-input") }}
+                    {{ form.adv_filter.label(class="form-check-label") }}
+                </div>
                 <div class="form-group">
                     {{ form.price.label }}
                     {{ form.price(class="form-control") }}
@@ -56,6 +60,8 @@ Alegrosz Welcome
                         <p class="card-text">
                             {{ item.description }}
                         </p>
+                        <h4>{{ "$%.2f"|format(item.price) }}
+                        </h4>
                     </div>
                     <div class="card-footer">
                         <small class="text-muted">

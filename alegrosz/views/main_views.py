@@ -38,8 +38,11 @@ def index():
         paramiters = []
 
         if form.title.data.strip():
-            filter_queries.append("i.title LIKE ?")
+            filter_queries.append(
+                "i.title LIKE ?" if not form.adv_filter.data else "i.title LIKE ? OR i.description LIKE ?")
             paramiters.append(f"%{escape(form.title.data)}%")
+            if form.adv_filter.data:
+                paramiters.append(f"%{escape(form.title.data)}%")
 
         if form.category.data:
             filter_queries.append("i.category_id = ?")
