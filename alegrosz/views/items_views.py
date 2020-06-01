@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, url_for
+from flask import Blueprint, render_template, request, flash, url_for, jsonify
 from werkzeug.utils import redirect, unescape
 
 from alegrosz.db import get_db
@@ -66,6 +66,9 @@ def add_item():
     c.execute("""SELECT id, name FROM subcategories WHERE category_id = ? """, (1,))
     subcategories = c.fetchall()
     form.subcategory.choices = subcategories
+
+    print(form.subcategory.choices)
+    print(form.subcategory.data)
 
     if form.validate_on_submit():
         filename = ""
@@ -170,3 +173,16 @@ def remove_item(item_id):
     else:
         flash(f"This item does not exist!", "danger")
     return redirect(url_for('main.index'))
+
+
+@item_bp.route("/category/<int:category_id>")
+def get_subcategories(category_id):
+    conn = get_db()
+    c = conn.cursor()
+
+    c.execute('''SELECT
+    id, name FROM subcategories WHERE category_id = ?
+    ''', (category_id,))
+    subcategories = c.fetchall()
+
+    return jsonify(subcategories=subcategories)

@@ -80,4 +80,9 @@ Alegrosz Welcome
 
 {% endblock %}
 
+{% block scripts %}
+    {{ super() }}
+    <script src="{{  url_for('static', filename='js/categories.js') }}"></script>
+{% endblock %}
+
 
